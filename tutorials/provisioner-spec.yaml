@@ -1,10 +1,14 @@
 spec:
   # If nil, the feature is disabled, nodes will never expire
-  ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
+  ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds; 
+
+  ######## expiration batch window ########
+  ######## at least longer than time for scheduling pods ########
 
   # If nil, the feature is disabled, nodes will never scale down due to low utilization
-  ttlSecondsAfterEmpty: 30
-
+  ttlSecondsAfterEmpty: 10
+  ######## Don't set too low in production ########
+  
   # Provisioned nodes will have these taints
   # Taints may prevent pods from scheduling if they are not tolerated
   taints:
@@ -13,7 +17,7 @@ spec:
 
   # Labels are arbitrary key-values that are applied to all nodes
   labels:
-    billing-team: my-team
+    label-x: my-team
   kubeletConfiguration:
     clusterDNS: ["10.0.1.100"]
   requirements:   
@@ -22,7 +26,7 @@ spec:
       values: ["m5.large", "m5.2xlarge"] 
     - key: topology.kubernetes.io/zone      
       operator: In      
-      values: ["ap-southeast-1", "ap-southeast-2"]
+      values: ["ap-southeast-1a", "ap-southeast-2b"]
     - key: "kubernetes.io/arch"
       operator: In
       values: ["arm64", "amd64"]
@@ -31,7 +35,7 @@ spec:
       values: ["spot"]
   limits:
     resources:
-      cpu: 1000 
+      cpu: 700m000 
       memory: 1000Gi
   provider:
     instanceProfile: MyInstanceProfile

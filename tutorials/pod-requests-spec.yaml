@@ -50,9 +50,9 @@ spec:
       - resources:
           requests:
             cpu: 800m
-            memory: 1Gi
+            memory: 700Mi
             nvidia.com/gpu: "1"
           limits:
-            cpu: 1000m
+            cpu: 700m000m
             memory: 2Gi
             nvidia.com/gpu: "1"

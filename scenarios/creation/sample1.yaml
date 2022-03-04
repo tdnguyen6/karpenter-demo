@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample1
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: sample1
+  template:
+    metadata:
+      labels:
+        app: sample1
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/os: linux
+        topology.kubernetes.io/zone: ap-southeast-1a
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: sample1
+          image: public.ecr.aws/eks-distro/kubernetes/pause:3.2
+          resources:
+            requests:
+              cpu: 700m
+              memory: 700Mi
+            limits:
+              cpu: 700m
+              memory: 700Mi

@@ -1,0 +1,30 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: provisioner1
+spec:
+  labels:
+    label-x: provisioner1-2022-03-04
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot"]
+    - key: topology.kubernetes.io/zone      
+      operator: In      
+      values: ["ap-southeast-1a"] # Asia Pacific (Singapore)
+    - key: "kubernetes.io/arch"
+      operator: In
+      values: ["amd64"]
+    - key: node.kubernetes.io/instance-type      
+      operator: In      
+      values: ["t3.small", "t3.medium"]
+  limits:
+    resources:
+      cpu: 100
+      memory: 1000Gi
+  provider:
+    subnetSelector:
+      karpenter.sh/discovery: karpenter-tidu
+    securityGroupSelector:
+      karpenter.sh/discovery: karpenter-tidu
+  ttlSecondsAfterEmpty: 10

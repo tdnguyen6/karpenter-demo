@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample3
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: sample3
+  template:
+    metadata:
+      labels:
+        app: sample3
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/os: linux
+        topology.kubernetes.io/zone: ap-southeast-1c
+        karpenter.sh/capacity-type: on-demand
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: sample3
+          image: public.ecr.aws/eks-distro/kubernetes/pause:3.2
+          resources:
+            requests:
+              cpu: 700m
+              memory: 700Mi
+              nvidia.com/gpu: 1
+            limits:
+              cpu: 700m
+              memory: 700Mi
+              nvidia.com/gpu: 1
