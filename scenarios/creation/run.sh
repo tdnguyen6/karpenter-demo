@@ -14,4 +14,7 @@ kubectl apply -f scenarios/creation/provisioner2.yaml
 
 
 # Scaling up from 3
-kubectl scale deployment sample1 --replicas 6
+kubectl scale deployment sample2 --replicas 5
+
+# Scaling up from 3
+kubectl scale deployment sample2 --replicas 6
