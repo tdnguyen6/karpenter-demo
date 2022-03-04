@@ -1,0 +1,58 @@
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/e2e-az-name
+            operator: In
+            values:
+            - e2e-az1
+            - e2e-az2
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: another-node-label-key
+            operator: In
+            values:
+            - another-node-label-value
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: security
+            operator: In
+            values:
+            - S1
+        topologyKey: topology.kubernetes.io/zone
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: security
+              operator: In
+              values:
+              - S2
+          topologyKey: topology.kubernetes.io/zone
+  template:    
+    spec:      
+      nodeSelector:        
+        node.kubernetes.io/instance-type: m5.large
+        kubernetes.io/arch: amd64
+        kubernetes.io/os: linux
+        topology.kubernetes.io/region: us-east-1
+        topology.kubernetes.io/zone: us-east-1c
+        disktype: ssd
+      containers:
+      - resources:
+          requests:
+            cpu: 800m
+            memory: 1Gi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+            nvidia.com/gpu: "1"
