@@ -35,7 +35,7 @@ spec:
       values: ["spot"]
   limits:
     resources:
-      cpu: 700m000 
+      cpu: 100
       memory: 1000Gi
   provider:
     instanceProfile: MyInstanceProfile
